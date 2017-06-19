@@ -12,11 +12,8 @@
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.16.0",
-    "bookshelf": "^0.10.3",
-    "bookshelf-cascade-delete": "^2.0.1",
     "compression": "^1.6.2",
     "config": "^1.25.1",
-    "connect-ensure-login": "^0.1.1",
     "cookie-parser": "^1.4.3",
     "cors": "^2.8.1",
     "cross-env": "^4.0.0",
@@ -24,14 +21,10 @@
     "express": "^4.15.2",
     "express-session": "^1.15.3",
     "jsonwebtoken": "^7.4.1",
-    "knex": "^0.12.7",
     "mongoose": "^4.10.6",
-    "mysql": "^2.13.0",
     "passport": "^0.3.2",
     "passport-facebook": "^2.1.1",
-    "passport-facebook-token": "^3.3.0",
-    "passport-jwt": "^2.2.1",
-    "socket.io": "^1.7.3"
+    "passport-facebook-token": "^3.3.0"
   },
   "devDependencies": {
     "babel-cli": "^6.22.2",

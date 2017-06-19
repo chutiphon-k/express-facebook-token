@@ -1,41 +1,22 @@
 import { Router } from 'express'
 import passport from 'passport'
-import { Strategy } from 'passport-facebook'
+import jwt from 'jsonwebtoken'
+import config from 'config'
 
 const router = Router()
 
-passport.use(new Strategy({
-	clientID: '1559210274103122',
-	clientSecret: '4a0a4715b7bd94d12b3409c6ce872bb3',
-	callbackURL: 'http://localhost:3000/login/facebook/return'
-}, (accessToken, refreshToken, profile, cb) => {
-	cb(null, profile)
-}))
+let getToken = (user) => {
+	let { _id, username } = user
+	let token = jwt.sign({ _id, username }, config.Api.secret, {
+		expiresIn: 60 * 60 * 24 * 30
+	})
+	return token
+}
 
-passport.serializeUser((user, cb) => {
-	cb(null, user)
-})
+router.get('/auth/facebook', passport.authenticate('facebook', { session: false }))
 
-passport.deserializeUser((obj, cb) => {
-	cb(null, obj)
-})
-
-router.get('/', (req, res) => {
-	res.render('home', { user: req.user })
-})
-
-router.get('/login', (req, res) => {
-	res.render('login')
-})
-
-router.get('/login/facebook', passport.authenticate('facebook'))
-
-router.get('/login/facebook/return', passport.authenticate('facebook', { failureRedirect: '/login' }), (req, res) => {
-	res.redirect('/')
-})
-
-router.get('/profile', (req, res) => {
-	res.render('profile', { user: req.user })
+router.get('/auth/facebook/callback', passport.authenticate('facebook', { session: false }), (req, res) => {
+	res.json({success: true, token: `JWT ${getToken(req.user)}`})
 })
 
 export default router
